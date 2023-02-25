@@ -6,6 +6,7 @@ const mongooseConnection = require("./helpers/mongoose-connection");
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(cors());
+app.use("/api", appRoutes);
 app.use((_, res) => {
   res.send({
     message: "Not found!",
