@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const moment = require("moment");
-
+const bcrypt = require("bcryptjs");
 const login = (req, res) => {
   User.find({ email: req.body.email }, function (err, docs) {
     if (err) {
@@ -21,9 +21,12 @@ const login = (req, res) => {
 
 const register = async (req, res) => {
   try {
+    const encryptedPassword = pass(req.body.password, 5);
+    console.log(password);
     const user = await new User({
       email: req.body.email,
-      password: req.body.password,
+      // password: req.body.password,
+      password: encryptedPassword,
       username: req.body.username,
       creation_date: moment().format("MMMM Do YYYY, h:mm:ss a"),
     });
@@ -39,7 +42,29 @@ const register = async (req, res) => {
   }
 };
 
+// const password = 'pass123';
+// var hashedPassword;
+// const password = "mypassword";
+// const saltRounds = 10;
+const pass = (password, saltRounds) => {
+  debugger;
+  return bcrypt.hashSync(password, saltRounds);
+};
 module.exports = {
   login,
   register,
 };
+
+// const bcrypt = require("bcryptjs");
+// // const password = 'pass123';
+// // var hashedPassword;
+// const password = "mypassword";
+// const saltRounds = 10;
+// bcrypt.hash(password, saltRounds, function (err, hash) {
+//   if (err) {
+//     // Handle error
+//   } else {
+//     // Store the hashed password in your database
+//     console.log(hash);
+//   }
+// });
