@@ -13,7 +13,7 @@ const login = (req, res) => {
           res.send("Invalid Credentials!");
         }
       } else {
-        res.send("Invalid Credentials!");
+        res.send("Invalids Credentials!");
       }
     }
   });
